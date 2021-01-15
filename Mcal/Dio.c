@@ -57,38 +57,97 @@ void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_ChannelLevelType ChannelLev
 			break;
 		default:
 			break;
+		}
 	}
 }
 Dio_ChannelLevelType Dio_ReadChannel(Dio_ChannelType ChannelId)
 {
 	Dio_PortType PortNum = ChannelId/NUM_OF_CHANNELS_IN_PORT;
 	uint8 BitOffset = ChannelId%NUM_OF_CHANNELS_IN_PORT;
-
-
+	Dio_ChannelLevelType RetVal = 0;
 	switch (PortNum) {
-			case Dio_Port_A:
-				GET_BIT(PORTA,BitOffset);
-				break;
-			case Dio_Port_B:
-				GET_BIT(PORTB,BitOffset);
-				break;
-			case Dio_Port_C:
-				GET_BIT(PORTC,BitOffset);
-				break;
-			case Dio_Port_D:
-				GET_BIT(PORTD,BitOffset);
-				break;
-			default:
-				break;
+	case Dio_Port_A:
+		RetVal= GET_BIT(PINA,BitOffset);
+		break;
+	case Dio_Port_B:
+		RetVal =GET_BIT(PINB,BitOffset);
+		break;
+	case Dio_Port_C:
+		RetVal= GET_BIT(PINC,BitOffset);
+		break;
+	case Dio_Port_D:
+		RetVal= GET_BIT(PIND,BitOffset);
+		break;
+	default:
+		break;
 
-
-
+	}
+	return RetVal;
 }
 void Dio_FlipChannel(Dio_ChannelType ChannelId)
 {
+	Dio_PortType PortNum = ChannelId/NUM_OF_CHANNELS_IN_PORT;
+	uint8 BitOffset = ChannelId%NUM_OF_CHANNELS_IN_PORT;
 
-
-
-
+	switch (PortNum) {
+	case Dio_Port_A:
+		TOGGLE_BIT(PORTA,BitOffset);
+		break;
+	case Dio_Port_B:
+		TOGGLE_BIT(PORTB,BitOffset);
+		break;
+	case Dio_Port_C:
+		TOGGLE_BIT(PORTC,BitOffset);
+		break;
+	case Dio_Port_D:
+		TOGGLE_BIT(PORTD,BitOffset);
+		break;
+	default:
+		break;
+	}
 
 }
+
+void Dio_WritePort(Dio_PortType PortId,uint8 Val)
+{
+	switch (PortId) {
+	case Dio_Port_A:
+		PORTA = Val;
+		break;
+	case Dio_Port_B:
+		PORTB = Val;
+		break;
+	case Dio_Port_C:
+		PORTC = Val;
+		break;
+	case Dio_Port_D:
+		PORTD = Val;
+		break;
+	default:
+		break;
+	}
+}
+
+uint8 Dio_ReadPort(Dio_PortType PortId)
+{
+	uint8 RetVal = 0;
+	switch (PortId) {
+	case Dio_Port_A:
+		RetVal = PINA;
+		break;
+	case Dio_Port_B:
+		RetVal = PINB;
+		break;
+	case Dio_Port_C:
+		RetVal = PINC;
+		break;
+	case Dio_Port_D:
+		RetVal = PIND;
+		break;
+	default:
+		break;
+	}
+	return RetVal;
+}
+
+
