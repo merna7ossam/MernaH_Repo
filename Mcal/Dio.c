@@ -10,9 +10,14 @@
 #include "Dio.h"
 
 #define NUM_OF_CHANNELS_IN_PORT      8
+
+extern const Dio_CfgUnionType DioCfgUnion ;
 void Dio_Init(void)
 {
-
+   DDRA = DioCfgUnion.CfgDirArr[0];
+   DDRB = DioCfgUnion.CfgDirArr[1];
+   DDRC = DioCfgUnion.CfgDirArr[2];
+   DDRD = DioCfgUnion.CfgDirArr[3];
 
 }
 void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_ChannelLevelType ChannelLevel)
